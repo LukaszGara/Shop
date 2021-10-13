@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block body %}
+<style>
+    body{background-color: rgb(209, 209, 209);}
+    .container{background-color: azure;}
+    .image {max-width: 25rem;}
+    div.image{margin-top: 4rem;}
+    .name_div{padding-top: 6rem; margin-left: 36rem; margin-top: 2rem;}
+    .price{margin-left: 50rem; font-size: 2rem;}
+</style>
+
+    <div class="container">
+        <div class="name_div">
+            <h2 class="name"> {{ item.name }} </h2>
+        </div>
+        <div class="image">
+            <img src="/images/{{ item.image }}" alt="item_image" class="image">
+            <div class="price_div">
+                <b class="price">{{ item.price }}</b>
+                <p class="description"> {{ item.description }} </p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

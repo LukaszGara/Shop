@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Shoping!{% endblock %}
+
+{% block body %}
+
+<style>
+  .price {margin-left: 7rem; padding-top: 1rem; color: black;}
+  .item_name {margin-left: 3rem; color: black;}
+</style>
+
+<div class="container">
+    <div>
+        {% for item in items %}
+        <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="/item/{{ item.id}}">
+                  <p class="item_name"> {{item.name}} </p>
+                  <img src="images/{{ item.image }}" style="width: 12rem;">
+                  <p class="price"> {{ item.price }} </p>
+              </a>
+            </li>
+          </ul>
+        {% endfor %}
+      </div>
+</div>
+
+{% endblock %}

@@ -47,4 +47,17 @@ class ProductsRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findseller(int $id): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT profile.nick, profile.avatar, user.email FROM products INNER JOIN profile ON 
+        products.seller_id = profile.id  INNER JOIN user ON 
+        profile.user_id = user.id WHERE products.id = :id';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        
+        return $stmt->fetchAllAssociative();
+    }
 }

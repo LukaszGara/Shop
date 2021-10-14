@@ -83,9 +83,12 @@ class AppController extends AbstractController
     public function showitem( int $id)
     {
         $item = $this->getDoctrine()->getRepository(Products::class)->find($id);
+        $seller = $this->getDoctrine()->getRepository(Products::class)->findseller($id);
+
 
         return $this->render('app/item_page.html.twig', [
-            'item' => $item 
+            'item' => $item, 
+            'seller' => $seller
         ]);
     }
     /**

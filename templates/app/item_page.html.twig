@@ -5,23 +5,36 @@
 {% block body %}
 <style>
     body{background-color: rgb(209, 209, 209);}
-    .container{background-color: azure;}
+    .container{background-color: azure; min-height: 40rem;}
     .image {max-width: 25rem;}
     div.image{margin-top: 4rem;}
-    .name_div{padding-top: 6rem; margin-left: 36rem; margin-top: 2rem;}
-    .price{margin-left: 50rem; font-size: 2rem;}
+    .name_div{padding-top: 3rem; margin-left: 33rem; margin-top: 2rem;}
+    .price_div{margin-left: 40rem; font-size: 2rem; margin-top: -15rem; margin-right: 3rem;}
+    .space{margin-left: 50px;}
+    .logo {width: 4rem;}
+    .description{margin-top: 8rem; margin-left: 17rem; font-size: 2rem; }
+    .description_text{margin-top: 2rem; margin-left: 3rem; margin-right: 3rem; font-size: 1.5rem;}
+    .btn {margin-left: 15rem;}
 </style>
 
     <div class="container">
         <div class="name_div">
-            <h2 class="name"> {{ item.name }} </h2>
+            <h1 class="name"> <b> {{ item.name }} </b> </h1>
         </div>
         <div class="image">
             <img src="/images/{{ item.image }}" alt="item_image" class="image">
-            <div class="price_div">
-                <b class="price">{{ item.price }}</b>
-                <p class="description"> {{ item.description }} </p>
-            </div>
+        </div>
+        <div class="price_div">
+            <p class="prices"><b> Price:<span class="space"> </span>{{item.price }}</b></p>
+            <p class="seller"><b> Seller: <img src="/images/{{ seller[0]['avatar'] }}" alt="logo" class="logo"> </b><a href="/current/{{ seller[0]['email'] }}"> {{ seller[0]['nick'] }} </a></p>
+            <p class="aount"> <b> Amount: </b> {{ item.amount }}</p>
+            <a class="btn btn-primary" href="#"> add to bucket </a>
+        </div>
+        <div class="description">
+            <p class="description"> <b>Description: </b></p>
+        </div>
+        <div class="description_text">
+            <p> {{ item.description }} </p>
         </div>
     </div>
 

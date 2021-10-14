@@ -51,7 +51,8 @@ class ProfileRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-        SELECT * FROM profile INNER JOIN user ON 
+        SELECT profile.id, profile.avatar, profile.name, profile.surname, user.email 
+        FROM profile INNER JOIN user ON 
         profile.user_id = user.id WHERE user.email = :email';
         $stmt = $conn->prepare($sql);
         $stmt->execute(['email' => $email]);

@@ -45,7 +45,7 @@ class Products
     private $image;
 
     /**
-     * @ORM\OneToMany(targetEntity=Purchase::class, mappedBy="product")
+     * @ORM\OneToMany(targetEntity=Purchase::class, mappedBy="Product")
      */
     private $purchase;
 
@@ -55,13 +55,19 @@ class Products
     private $description;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Profile::class, inversedBy="products")
+     * @ORM\ManyToOne(targetEntity=Profile::class, inversedBy="Products")
      */
     private $seller;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=ShoppingCart::class, mappedBy="item")
+     */
+    private $shoppingCarts;
 
     public function __construct()
     {
         $this->purchase = new ArrayCollection();
+        $this->shoppingCarts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -178,6 +184,33 @@ class Products
     public function setSeller(?profile $seller): self
     {
         $this->seller = $seller;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ShoppingCart[]
+     */
+    public function getShoppingCarts(): Collection
+    {
+        return $this->shoppingCarts;
+    }
+
+    public function addShoppingCart(ShoppingCart $shoppingCart): self
+    {
+        if (!$this->shoppingCarts->contains($shoppingCart)) {
+            $this->shoppingCarts[] = $shoppingCart;
+            $shoppingCart->addItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShoppingCart(ShoppingCart $shoppingCart): self
+    {
+        if ($this->shoppingCarts->removeElement($shoppingCart)) {
+            $shoppingCart->removeItem($this);
+        }
 
         return $this;
     }

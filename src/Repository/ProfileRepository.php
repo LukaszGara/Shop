@@ -51,7 +51,7 @@ class ProfileRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-        SELECT profile.id, profile.avatar, profile.name, profile.surname, user.email 
+        SELECT profile.id, profile.avatar, profile.name, profile.surname, user.email,profile.user_id        
         FROM profile INNER JOIN user ON 
         profile.user_id = user.id WHERE user.email = :email';
         $stmt = $conn->prepare($sql);
@@ -59,4 +59,18 @@ class ProfileRepository extends ServiceEntityRepository
         
         return $stmt->fetchAllAssociative();
     }
+    public function findProfileUser(int $id): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT profile.id 
+        FROM profile INNER JOIN user ON 
+        profile.user_id = user.id WHERE user.id = :id';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        
+        return $stmt->fetchAllAssociative();
+    }
+    
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProfileRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -53,6 +55,16 @@ class Profile
      * @var File
      */
     private $imageFile;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ShoppingCart::class, mappedBy="profile")
+     */
+    private $shoppingCarts;
+
+    public function __construct()
+    {
+        $this->shoppingCarts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,5 +149,35 @@ class Profile
     public function setImageFile(?File $imageFile = null)
     {
         $this->imageFile = $imageFile;
+    }
+
+    /**
+     * @return Collection|ShoppingCart[]
+     */
+    public function getShoppingCarts(): Collection
+    {
+        return $this->shoppingCarts;
+    }
+
+    public function addShoppingCart(ShoppingCart $shoppingCart): self
+    {
+        if (!$this->shoppingCarts->contains($shoppingCart)) {
+            $this->shoppingCarts[] = $shoppingCart;
+            $shoppingCart->setProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShoppingCart(ShoppingCart $shoppingCart): self
+    {
+        if ($this->shoppingCarts->removeElement($shoppingCart)) {
+            // set the owning side to null (unless already changed)
+            if ($shoppingCart->getProfile() === $this) {
+                $shoppingCart->setProfile(null);
+            }
+        }
+
+        return $this;
     }
 }

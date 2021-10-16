@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block body %}
+
+<style>
+.container {margin-top: 3rem; border-style: solid;}
+.avatar {width: 300px; padding: 1rem;}
+.type {margin-right: 5rem;}
+.info {font-size: 1.5rem; margin-left: 30rem;}
+.info1 {font-size: 1.5rem; margin-left: 30rem; margin-top: -10rem;}
+.p-history {display: inline-block; margin-right: 15rem;}
+.image {width: 10rem;}
+.purchase-history {margin-left: 32rem; margin-top: 5rem; margin-bottom: 3rem; font-size: 2rem;}
+</style>
+
+<div class="container">
+    {% for profile in profile %}
+        <img src="/images/{{ profile.avatar }}" class="avatar">
+        <p class="info1"> <b class="type">Name: </b> {{ profile.name }} </p>
+        <p class="info"> <b class="type">Surname: </b> {{ profile.surname }} </p>
+        <p class="info"> <b class="type">email:</b> {{ profile.email }} </p>
+    {% endfor %}
+    
+            <div class="history">
+                <p class="purchase-history">sell history </p>
+                {% for history in history %}
+                    <div class="history">
+                        <ul>
+                            <li class="p-history" style="margin-left: 3rem;"> <img src="/images/{{ history.image }}" alt="history" class="image"> </li>
+                            <li class="p-history"> {{ history.name }} </li>
+                            <li class="p-history"> {{ history.price }} </li>
+                        </ul>
+                    </div>
+                {% endfor %}
+                </div>
+</div>
+
+{% endblock %}

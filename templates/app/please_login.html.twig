@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Please Log in{% endblock %}
+
+{% block body %}
+
+<style>
+.login{font-size: 4rem; color: rgb(255, 145, 0); margin-top: 4rem;}
+.btn{ margin-left: 30rem; }
+</style>
+
+<div class="container">
+    <p class="login"> Please Sign in to get acces to this page!</p>
+    <a href="/login" class="btn btn-primary btn-lg"> Log in </a>
+</div>
+
+{% endblock %}

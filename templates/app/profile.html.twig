@@ -24,28 +24,29 @@
         <p class="info"> <b class="type">email:</b> {{ profile.email }} </p>
     {% endfor %}
     {% if profile[0]['email'] is defined %}
-        {% if profile[0]['email'] == app.user.email  %}
-            <div class="button">
-                <a href="/profile/edit/{{ profile[0]['id'] }}" class="btn btn-primary btn-lg">edit informations about you</a>
-            </div>
-            <div class="history">
-                <p class="purchase-history">purchase history </p>
-                {% for history in history %}
-                    <div class="history">
-                        <ul>
-                            <li class="p-history" style="margin-left: 3rem;"> <img src="/images/{{ history.image }}" alt="history" class="image"> </li>
-                            <li class="p-history"> {{ history.name }} </li>
-                            <li class="p-history"> {{ history.price }} </li>
-                        </ul>
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% else %}   
+        <div class="button">
+            <a href="/profile/edit/{{ profile[0]['id'] }}" class="btn btn-primary btn-lg">edit informations about you</a>
+        </div>
+    {% else %}
     <div class="button">
-        <a href="/profile/add" class="btn btn-primary btn-lg">Configure your profile</a>
+        <a href="/profile/add" class="btn btn-primary btn-lg">add informations about you</a>
     </div>
     {% endif %}
+    <div class="button">
+        <a href="/item/add/{{ profile[0]['id'] }}" class="btn btn-primary btn-lg">Sell something</a>
+    </div>
+    <div class="history">
+        <p class="purchase-history">purchase history </p>
+        {% for history in history %}
+            <div class="history">
+                <ul>
+                    <li class="p-history" style="margin-left: 3rem;"> <img src="/images/{{ history.image }}" alt="history" class="image"> </li>
+                    <li class="p-history"> {{ history.name }} </li>
+                    <li class="p-history"> {{ history.price }} </li>
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
 {% endblock %}

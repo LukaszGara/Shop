@@ -7,6 +7,9 @@
 <style>
   .price {margin-left: 7rem; padding-top: 1rem; color: black;}
   .item_name {margin-left: 3rem; color: black;}
+  .pagination {display: inline-block; margin-right: 1rem;}
+  .image {width: 12rem; height: 10rem;}
+  .container{margin-top: 2rem;}
 </style>
 
 <div class="container">
@@ -16,7 +19,7 @@
             <li class="page-item">
               <a class="page-link" href="/item/{{ item.id}}">
                   <p class="item_name"> {{item.name}} </p>
-                  <img src="images/{{ item.image }}" style="width: 12rem;">
+                  <img src="images/{{ item.image }}" class="image">
                   <p class="price"> {{ item.price }} </p>
               </a>
             </li>

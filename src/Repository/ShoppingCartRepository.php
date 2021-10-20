@@ -47,11 +47,26 @@ class ShoppingCartRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findSell(int $id): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT products.name, products.price FROM shopping_cart 
+        INNER JOIN profile ON profile.id = shopping_cart.profile_id 
+        INNER JOIN shopping_cart_products ON shopping_cart_products.shopping_cart_id = shopping_cart.id 
+        INNER JOIN products ON products.id = shopping_cart_products.products_id 
+        WHERE prodcuts.seller_id = :id';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        
+        return $stmt->fetchAllAssociative();
+    }
+
     public function findCart(int $id): array
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = 'SELECT products.name, products.price, products.id, COUNT(*) AS amount FROM shopping_cart 
+        $sql = 'SELECT products.name, products.price, products.id, products.seller_id, COUNT(*) AS amount FROM shopping_cart 
         INNER JOIN profile ON profile.id = shopping_cart.profile_id 
         INNER JOIN shopping_cart_products ON shopping_cart_products.shopping_cart_id = shopping_cart.id 
         INNER JOIN products ON products.id = shopping_cart_products.products_id 

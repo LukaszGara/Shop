@@ -61,9 +61,15 @@ class Profile
      */
     private $shoppingCarts;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Purchase::class, mappedBy="Seller")
+     */
+    private $selling;
+
     public function __construct()
     {
         $this->shoppingCarts = new ArrayCollection();
+        $this->selling = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -175,6 +181,36 @@ class Profile
             // set the owning side to null (unless already changed)
             if ($shoppingCart->getProfile() === $this) {
                 $shoppingCart->setProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Purchase[]
+     */
+    public function getSelling(): Collection
+    {
+        return $this->selling;
+    }
+
+    public function addSelling(Purchase $selling): self
+    {
+        if (!$this->selling->contains($selling)) {
+            $this->selling[] = $selling;
+            $selling->setSeller($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSelling(Purchase $selling): self
+    {
+        if ($this->selling->removeElement($selling)) {
+            // set the owning side to null (unless already changed)
+            if ($selling->getSeller() === $this) {
+                $selling->setSeller(null);
             }
         }
 

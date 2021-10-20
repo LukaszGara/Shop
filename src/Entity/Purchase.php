@@ -39,9 +39,9 @@ class Purchase
         return $this->user_id;
     }
 
-    public function setUser(?user $user_id): self
+    public function setUser(?user $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
@@ -57,4 +57,5 @@ class Purchase
 
         return $this;
     }
+
 }

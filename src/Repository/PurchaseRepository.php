@@ -54,10 +54,22 @@ class PurchaseRepository extends ServiceEntityRepository
         $sql = '
         SELECT products.name, products.price, products.image FROM purchase 
         INNER JOIN user ON purchase.user_id = user.id 
-        INNER JOIN products ON purchase.user_id = products.id 
+        INNER JOIN products ON purchase.product_id = products.id 
         WHERE user.email = :email';
         $stmt = $conn->prepare($sql);
         $stmt->execute(['email' => $email]);
+        
+        return $stmt->fetchAllAssociative();
+    }
+    public function findsellhistory(int $id): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT products.name, products.price, products.image FROM `purchase` 
+        INNER JOIN products ON purchase.product_id = products.id 
+        WHERE products.seller_id = :id';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
         
         return $stmt->fetchAllAssociative();
     }
